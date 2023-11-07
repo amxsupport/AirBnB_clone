@@ -15,7 +15,7 @@ class HBNBCommand(cmd.Cmd):
     """
 
 
-  def emptyline(self):
+    def emptyline(self):
         """Do nothing upon receiving an empty line."""
         pass
 
@@ -28,6 +28,19 @@ class HBNBCommand(cmd.Cmd):
         """EOF signal to exit the program."""
         print("")
         return True
+
+    def do_create(self, arg):
+        """Usage: create <class>
+        Create a new class instance and print its id.
+        """
+        argl = parse(arg)
+        if len(argl) == 0:
+            print("** class name missing **")
+        elif argl[0] not in HBNBCommand.__classes:
+            print("** class doesn't exist **")
+        else:
+            print(eval(argl[0])().id)
+            storage.save()
 
 
 
