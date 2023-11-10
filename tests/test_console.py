@@ -844,4 +844,116 @@ class TestHBNBCommand_all(unittest.TestCase):
             self.assertIn("Review", output.getvalue().strip())
             self.assertNotIn("BaseModel", output.getvalue().strip())
 
+class TestHBNBCommand_update(unittest.TestCase):
+    """Unittests for testing update from the HBNB command interpreter."""
+
+    @classmethod
+    def setUp(self):
+        try:
+            os.rename("file.json", "tmp")
+        except IOError:
+            pass
+        FileStorage.__objects = {}
+
+    @classmethod
+    def tearDown(self):
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+        try:
+            os.rename("tmp", "file.json")
+        except IOError:
+            pass
+
+    def test_update_missing_class(self):
+        correct = "** class name missing **"
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("update"))
+            self.assertEqual(correct, output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd(".update()"))
+            self.assertEqual(correct, output.getvalue().strip())
+
+    def test_update_invalid_class(self):
+        correct = "** class doesn't exist **"
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("update MyModel"))
+            self.assertEqual(correct, output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("MyModel.update()"))
+            self.assertEqual(correct, output.getvalue().strip())
+
+    def test_update_missing_id_space_notation(self):
+        correct = "** instance id missing **"
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("update BaseModel"))
+            self.assertEqual(correct, output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("update User"))
+            self.assertEqual(correct, output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("update State"))
+            self.assertEqual(correct, output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("update City"))
+            self.assertEqual(correct, output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("update Amenity"))
+            self.assertEqual(correct, output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("update Place"))
+            self.assertEqual(correct, output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("update Review"))
+            self.assertEqual(correct, output.getvalue().strip())
+
+    def test_update_missing_id_dot_notation(self):
+        correct = "** instance id missing **"
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("BaseModel.update()"))
+            self.assertEqual(correct, output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("User.update()"))
+            self.assertEqual(correct, output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("State.update()"))
+            self.assertEqual(correct, output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("City.update()"))
+            self.assertEqual(correct, output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("Amenity.update()"))
+            self.assertEqual(correct, output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("Place.update()"))
+            self.assertEqual(correct, output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("Review.update()"))
+            self.assertEqual(correct, output.getvalue().strip())
+
+    def test_update_invalid_id_space_notation(self):
+        correct = "** no instance found **"
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("update BaseModel 1"))
+            self.assertEqual(correct, output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("update User 1"))
+            self.assertEqual(correct, output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("update State 1"))
+            self.assertEqual(correct, output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("update City 1"))
+            self.assertEqual(correct, output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("update Amenity 1"))
+            self.assertEqual(correct, output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("update Place 1"))
+            self.assertEqual(correct, output.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("update Review 1"))
+            self.assertEqual(correct, output.getvalue().strip())
+
 
