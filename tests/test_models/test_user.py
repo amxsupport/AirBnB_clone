@@ -158,3 +158,23 @@ class TestUser_to_dict(unittest.TestCase):
         self.assertEqual("Holberton", us.middle_name)
         self.assertIn("my_number", us.to_dict())
 
+    def test_to_dict_datetime_attributes_are_strs(self):
+        us = User()
+        us_dict = us.to_dict()
+        self.assertEqual(str, type(us_dict["id"]))
+        self.assertEqual(str, type(us_dict["created_at"]))
+        self.assertEqual(str, type(us_dict["updated_at"]))
+
+    def test_to_dict_output(self):
+        dt = datetime.today()
+        us = User()
+        us.id = "123456"
+        us.created_at = us.updated_at = dt
+        tdict = {
+            'id': '123456',
+            '__class__': 'User',
+            'created_at': dt.isoformat(),
+            'updated_at': dt.isoformat(),
+        }
+        self.assertDictEqual(us.to_dict(), tdict)
+
