@@ -108,3 +108,21 @@ class TestUser_save(unittest.TestCase):
         except IOError:
             pass
 
+    def test_one_save(self):
+        us = User()
+        sleep(0.05)
+        first_updated_at = us.updated_at
+        us.save()
+        self.assertLess(first_updated_at, us.updated_at)
+
+    def test_two_saves(self):
+        us = User()
+        sleep(0.05)
+        first_updated_at = us.updated_at
+        us.save()
+        second_updated_at = us.updated_at
+        self.assertLess(first_updated_at, second_updated_at)
+        sleep(0.05)
+        us.save()
+        self.assertLess(second_updated_at, us.updated_at)
+
