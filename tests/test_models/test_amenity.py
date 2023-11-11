@@ -38,4 +38,33 @@ class TestAmenity_instantiation(unittest.TestCase):
         self.assertIn("name", dir(Amenity()))
         self.assertNotIn("name", am.__dict__)
 
+    def test_two_amenities_unique_ids(self):
+        am1 = Amenity()
+        am2 = Amenity()
+        self.assertNotEqual(am1.id, am2.id)
+
+    def test_two_amenities_different_created_at(self):
+        am1 = Amenity()
+        sleep(0.05)
+        am2 = Amenity()
+        self.assertLess(am1.created_at, am2.created_at)
+
+    def test_two_amenities_different_updated_at(self):
+        am1 = Amenity()
+        sleep(0.05)
+        am2 = Amenity()
+        self.assertLess(am1.updated_at, am2.updated_at)
+
+    def test_str_representation(self):
+        dt = datetime.today()
+        dt_repr = repr(dt)
+        am = Amenity()
+        am.id = "123456"
+        am.created_at = am.updated_at = dt
+        amstr = am.__str__()
+        self.assertIn("[Amenity] (123456)", amstr)
+        self.assertIn("'id': '123456'", amstr)
+        self.assertIn("'created_at': " + dt_repr, amstr)
+        self.assertIn("'updated_at': " + dt_repr, amstr)
+
 
