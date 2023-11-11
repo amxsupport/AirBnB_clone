@@ -178,3 +178,12 @@ class TestUser_to_dict(unittest.TestCase):
         }
         self.assertDictEqual(us.to_dict(), tdict)
 
+    def test_contrast_to_dict_dunder_dict(self):
+        us = User()
+        self.assertNotEqual(us.to_dict(), us.__dict__)
+
+    def test_to_dict_with_arg(self):
+        us = User()
+        with self.assertRaises(TypeError):
+            us.to_dict(None)
+
