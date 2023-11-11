@@ -126,3 +126,15 @@ class TestUser_save(unittest.TestCase):
         us.save()
         self.assertLess(second_updated_at, us.updated_at)
 
+    def test_save_with_arg(self):
+        us = User()
+        with self.assertRaises(TypeError):
+            us.save(None)
+
+    def test_save_updates_file(self):
+        us = User()
+        us.save()
+        usid = "User." + us.id
+        with open("file.json", "r") as f:
+            self.assertIn(usid, f.read())
+
