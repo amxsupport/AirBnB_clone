@@ -133,3 +133,23 @@ class TestState_save(unittest.TestCase):
         with open("file.json", "r") as f:
             self.assertIn(stid, f.read())
 
+class TestState_to_dict(unittest.TestCase):
+    """Unittests for testing to_dict method of the State class."""
+
+    def test_to_dict_type(self):
+        self.assertTrue(dict, type(State().to_dict()))
+
+    def test_to_dict_contains_correct_keys(self):
+        st = State()
+        self.assertIn("id", st.to_dict())
+        self.assertIn("created_at", st.to_dict())
+        self.assertIn("updated_at", st.to_dict())
+        self.assertIn("__class__", st.to_dict())
+
+    def test_to_dict_contains_added_attributes(self):
+        st = State()
+        st.middle_name = "Holberton"
+        st.my_number = 98
+        self.assertEqual("Holberton", st.middle_name)
+        self.assertIn("my_number", st.to_dict())
+
