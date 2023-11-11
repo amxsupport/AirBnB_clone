@@ -134,4 +134,24 @@ class TestAmenity_save(unittest.TestCase):
         with open("file.json", "r") as f:
             self.assertIn(amid, f.read())
 
+class TestAmenity_to_dict(unittest.TestCase):
+    """Unittests for testing to_dict method of the Amenity class."""
+
+    def test_to_dict_type(self):
+        self.assertTrue(dict, type(Amenity().to_dict()))
+
+    def test_to_dict_contains_correct_keys(self):
+        am = Amenity()
+        self.assertIn("id", am.to_dict())
+        self.assertIn("created_at", am.to_dict())
+        self.assertIn("updated_at", am.to_dict())
+        self.assertIn("__class__", am.to_dict())
+
+    def test_to_dict_contains_added_attributes(self):
+        am = Amenity()
+        am.middle_name = "Holberton"
+        am.my_number = 98
+        self.assertEqual("Holberton", am.middle_name)
+        self.assertIn("my_number", am.to_dict())
+
 
