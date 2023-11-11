@@ -139,4 +139,24 @@ class TestCity_save(unittest.TestCase):
         with open("file.json", "r") as f:
             self.assertIn(cyid, f.read())
 
+class TestCity_to_dict(unittest.TestCase):
+    """Unittests for testing to_dict method of the City class."""
+
+    def test_to_dict_type(self):
+        self.assertTrue(dict, type(City().to_dict()))
+
+    def test_to_dict_contains_correct_keys(self):
+        cy = City()
+        self.assertIn("id", cy.to_dict())
+        self.assertIn("created_at", cy.to_dict())
+        self.assertIn("updated_at", cy.to_dict())
+        self.assertIn("__class__", cy.to_dict())
+
+    def test_to_dict_contains_added_attributes(self):
+        cy = City()
+        cy.middle_name = "Holberton"
+        cy.my_number = 98
+        self.assertEqual("Holberton", cy.middle_name)
+        self.assertIn("my_number", cy.to_dict())
+
 
