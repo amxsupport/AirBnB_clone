@@ -115,3 +115,31 @@ class TestPlace_instantiation(unittest.TestCase):
         pl2 = Place()
         self.assertLess(pl1.updated_at, pl2.updated_at)
 
+    def test_str_representation(self):
+        dt = datetime.today()
+        dt_repr = repr(dt)
+        pl = Place()
+        pl.id = "123456"
+        pl.created_at = pl.updated_at = dt
+        plstr = pl.__str__()
+        self.assertIn("[Place] (123456)", plstr)
+        self.assertIn("'id': '123456'", plstr)
+        self.assertIn("'created_at': " + dt_repr, plstr)
+        self.assertIn("'updated_at': " + dt_repr, plstr)
+
+    def test_args_unused(self):
+        pl = Place(None)
+        self.assertNotIn(None, pl.__dict__.values())
+
+    def test_instantiation_with_kwargs(self):
+        dt = datetime.today()
+        dt_iso = dt.isoformat()
+        pl = Place(id="345", created_at=dt_iso, updated_at=dt_iso)
+        self.assertEqual(pl.id, "345")
+        self.assertEqual(pl.created_at, dt)
+        self.assertEqual(pl.updated_at, dt)
+
+    def test_instantiation_with_None_kwargs(self):
+        with self.assertRaises(TypeError):
+            Place(id=None, created_at=None, updated_at=None)
+
