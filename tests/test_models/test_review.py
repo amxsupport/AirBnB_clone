@@ -145,5 +145,25 @@ class TestReview_save(unittest.TestCase):
         with open("file.json", "r") as f:
             self.assertIn(rvid, f.read())
 
+class TestReview_to_dict(unittest.TestCase):
+    """Unittests for testing to_dict method of the Review class."""
+
+    def test_to_dict_type(self):
+        self.assertTrue(dict, type(Review().to_dict()))
+
+    def test_to_dict_contains_correct_keys(self):
+        rv = Review()
+        self.assertIn("id", rv.to_dict())
+        self.assertIn("created_at", rv.to_dict())
+        self.assertIn("updated_at", rv.to_dict())
+        self.assertIn("__class__", rv.to_dict())
+
+    def test_to_dict_contains_added_attributes(self):
+        rv = Review()
+        rv.middle_name = "Holberton"
+        rv.my_number = 98
+        self.assertEqual("Holberton", rv.middle_name)
+        self.assertIn("my_number", rv.to_dict())
+
 
 
