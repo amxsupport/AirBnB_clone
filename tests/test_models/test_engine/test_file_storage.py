@@ -82,6 +82,20 @@ class TestFileStorage_methods(unittest.TestCase):
         models.storage.new(cy)
         models.storage.new(am)
         models.storage.new(rv)
+        self.assertIn("BaseModel." + bm.id, models.storage.all().keys())
+        self.assertIn(bm, models.storage.all().values())
+        self.assertIn("User." + us.id, models.storage.all().keys())
+        self.assertIn(us, models.storage.all().values())
+        self.assertIn("State." + st.id, models.storage.all().keys())
+        self.assertIn(st, models.storage.all().values())
+        self.assertIn("Place." + pl.id, models.storage.all().keys())
+        self.assertIn(pl, models.storage.all().values())
+        self.assertIn("City." + cy.id, models.storage.all().keys())
+        self.assertIn(cy, models.storage.all().values())
+        self.assertIn("Amenity." + am.id, models.storage.all().keys())
+        self.assertIn(am, models.storage.all().values())
+        self.assertIn("Review." + rv.id, models.storage.all().keys())
+        self.assertIn(rv, models.storage.all().values())
 
 
 
