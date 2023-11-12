@@ -115,4 +115,35 @@ class TestReview_save(unittest.TestCase):
         except IOError:
             pass
 
+    def test_one_save(self):
+        rv = Review()
+        sleep(0.05)
+        first_updated_at = rv.updated_at
+        rv.save()
+        self.assertLess(first_updated_at, rv.updated_at)
+
+    def test_two_saves(self):
+        rv = Review()
+        sleep(0.05)
+        first_updated_at = rv.updated_at
+        rv.save()
+        second_updated_at = rv.updated_at
+        self.assertLess(first_updated_at, second_updated_at)
+        sleep(0.05)
+        rv.save()
+        self.assertLess(second_updated_at, rv.updated_at)
+
+    def test_save_with_arg(self):
+        rv = Review()
+        with self.assertRaises(TypeError):
+            rv.save(None)
+
+    def test_save_updates_file(self):
+        rv = Review()
+        rv.save()
+        rvid = "Review." + rv.id
+        with open("file.json", "r") as f:
+            self.assertIn(rvid, f.read())
+
+
 
